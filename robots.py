@@ -57,8 +57,18 @@ class InsufficientBatteryError(Exception):
 
         super().__init__(message)
 
-if __name__ == "__main__":
-    try:
-        r = Robot("test")  # should fail — Robot is abstract
-    except TypeError as e:
-        print("Correctly blocked:", e)
+
+class DroneRobot(Robot):
+    def __init__(self, name, battery=100, max_altitude=400):
+        super().__init__(name, battery)
+
+        self.max_altitude = max_altitude
+
+    def perform_task(self, **kwargs):
+        self.use_battery(20)
+
+        return f"{self.name} completed a flight up to {self.max_altitude}m."
+
+d = DroneRobot("Aqua-Drone", battery=50, max_altitude=300)
+print(d.perform_task())
+print(d)
