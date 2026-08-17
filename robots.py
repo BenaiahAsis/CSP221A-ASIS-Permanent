@@ -71,7 +71,7 @@ def log_action(func):
     return wrapper
 
 class DroneRobot(Robot):
-    def __init__(self, name, battery=100, max_altitude=400):
+    def __init__(self, name, battery=1000, max_altitude=400):
         super().__init__(name, battery)
 
         self.max_altitude = max_altitude
