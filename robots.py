@@ -69,6 +69,29 @@ class DroneRobot(Robot):
 
         return f"{self.name} completed a flight up to {self.max_altitude}m."
 
-d = DroneRobot("Aqua-Drone", battery=50, max_altitude=300)
-print(d.perform_task())
-print(d)
+
+class CleaningRobot(Robot):
+    def __init__(self, name, battery=100, dust_capacity=500):
+        super().__init__(name, battery)
+
+        self.dust_capacity = dust_capacity
+
+    def perform_task(self, **kwargs):
+        self.use_battery(8)
+
+        return f"{self.name} vacuumed up to {self.dust_capacity}ml of dust."
+    
+if __name__ == "__main__":
+    try:
+        r = Robot("test")
+        print("ERROR: instantiated abstract Robot — this should be impossible")
+    except TypeError as e:
+        print("Correctly blocked:", e)
+
+    d = DroneRobot("Aqua-Drone", battery=50, max_altitude=300)
+    print(d.perform_task())
+    print(d)
+
+    c = CleaningRobot("Aqua-Cleaner", battery=75, dust_capacity=300)
+    print(c.perform_task())
+    print(c)
