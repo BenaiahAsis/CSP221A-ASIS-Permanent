@@ -93,6 +93,44 @@ class CleaningRobot(Robot):
 
         return f"{self.name} vacuumed up to {self.dust_capacity}ml of dust."
 
+# --- Part 1.8: Mutable Class Attribute Demonstration (standalone, not part of Robot hierarchy) ---
+
+
+class BuggyLogger:
+    logs = []
+
+    def add_log(self, message):
+        self.logs.append(message)
+
+
+class FixedLogger:
+    def __init__(self):
+        self.logs = []
+
+    def add_log(self, message):
+        self.logs.append(message)
+
+
+def demonstrate_mutable_class_attribute_bug():
+    print("--- Buggy version (shared list) ---")
+    a = BuggyLogger()
+    b = BuggyLogger()
+    a.add_log("Robot A started")
+    b.add_log("Robot B started")
+    print("a.logs:", a.logs)
+    print("b.logs:", b.logs)
+
+    print("\n--- Fixed version (separate lists) ---")
+    x = FixedLogger()
+    y = FixedLogger()
+    x.add_log("Robot X started")
+    y.add_log("Robot Y started")
+    print("x.logs:", x.logs)
+    print("y.logs:", y.logs)
+
+print("\n--- Mutable Class Attribute Demo ---")
+demonstrate_mutable_class_attribute_bug()
+
 def fleet_report(robots):
     for robot in robots:
         print(str(robot))
@@ -126,7 +164,7 @@ if __name__ == "__main__":
     fleet_report([d, c])
 
     print("\n--- run_task_safely tests ---")
-    run_task_safely(d)  # should succeed, d has enough battery left
+    run_task_safely(d)      
     
     low_battery_drone = DroneRobot("Low-Drone", battery=5, max_altitude=200)
     run_task_safely(low_battery_drone) 
