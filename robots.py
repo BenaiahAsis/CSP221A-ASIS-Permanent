@@ -80,6 +80,11 @@ class CleaningRobot(Robot):
         self.use_battery(8)
 
         return f"{self.name} vacuumed up to {self.dust_capacity}ml of dust."
+
+def fleet_report(robots):
+    for robot in robots:
+        print(str(robot))
+
     
 if __name__ == "__main__":
     try:
@@ -95,3 +100,6 @@ if __name__ == "__main__":
     c = CleaningRobot("Aqua-Cleaner", battery=75, dust_capacity=300)
     print(c.perform_task())
     print(c)
+
+    print("\n--- Fleet Report ---")
+    fleet_report([d, c])
