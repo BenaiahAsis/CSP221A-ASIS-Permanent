@@ -170,3 +170,9 @@ if __name__ == "__main__":
     run_task_safely(low_battery_drone) 
 
     print(DroneRobot.perform_task.__name__)
+
+    print("\n--- from_config test ---")
+    config = {"name": "Config-Drone", "battery": 15}
+    drone_from_config = DroneRobot.from_config(config)
+    print(drone_from_config)
+    print(repr(drone_from_config))
