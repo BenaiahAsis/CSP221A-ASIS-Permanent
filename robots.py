@@ -57,16 +57,28 @@ class InsufficientBatteryError(Exception):
 
         super().__init__(message)
 
+def log_action(func):
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+
+        logging.info(f"{self.name} starting {func.__name__}")
+
+        result = func(self, *args, **kwargs)
+
+        logging.info(f"{self.name} finished {func.__name__}")
+
+        return result
+    return wrapper
 
 class DroneRobot(Robot):
     def __init__(self, name, battery=100, max_altitude=400):
         super().__init__(name, battery)
 
         self.max_altitude = max_altitude
-
+        
+    @log_action
     def perform_task(self, **kwargs):
         self.use_battery(20)
-
         return f"{self.name} completed a flight up to {self.max_altitude}m."
 
 
@@ -118,3 +130,5 @@ if __name__ == "__main__":
     
     low_battery_drone = DroneRobot("Low-Drone", battery=5, max_altitude=200)
     run_task_safely(low_battery_drone) 
+
+    print(DroneRobot.perform_task.__name__)
